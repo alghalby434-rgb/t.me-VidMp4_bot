@@ -3,7 +3,8 @@ import yt_dlp
 from telegram import Update
 from telegram.ext import Application, MessageHandler, filters, ContextTypes
 
-TOKEN = "ضع_توكن_البوت_هنا"
+# جلب التوكن من متغيرات البيئة في ريندر
+TOKEN = os.getenv("BOT_TOKEN")
 
 async def download_video(update: Update, context: ContextTypes.DEFAULT_TYPE):
     url = update.message.text.strip()
@@ -48,6 +49,10 @@ async def download_video(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
 
 def main():
+    # التحقق من وجود التوكن قبل تشغيل البوت
+    if not TOKEN:
+        raise ValueError("❌ لم يتم العثور على BOT_TOKEN في متغيرات البيئة (Environment Variables).")
+
     app = Application.builder().token(TOKEN).build()
 
     app.add_handler(
