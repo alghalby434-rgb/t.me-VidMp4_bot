@@ -1,1 +1,2 @@
-pip install yt-dlp
+python-telegram-bot
+yt-dlp
